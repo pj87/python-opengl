@@ -1,0 +1,5 @@
+https://github.com/rougier/pyglfw
+unzip pyglfw-master.zip
+sudo pip install glfw
+sudo apt-get install libglfw3
+sudo apt-get install libglfw3-dev
