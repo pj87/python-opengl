@@ -109,12 +109,19 @@ def run():
     
     GL.glClearColor(0, 0, 0, 1)
 
-    while True:      
+    while running: 
+       while sdl2.SDL_PollEvent(ctypes.byref(event)) != 0: 
+          if event.type == sdl2.SDL_QUIT: 
+             running = False
+          if event.type == sdl2.events.SDL_KEYDOWN: 
+             print "SDL_KEYDOWN" 
+             if event.key.keysym.sym == sdl2.SDLK_ESCAPE: 
+                running = False
        GL.glClear(GL.GL_COLOR_BUFFER_BIT)
        GL.glDrawElements(GL.GL_TRIANGLES, 6, GL.GL_UNSIGNED_INT, None)
 
        sdl2.SDL_GL_SwapWindow(window)
-       sdl2.SDL_Delay(10)
+       #sdl2.SDL_Delay(10)
 
     sdl2.SDL_GL_DeleteContext(context)
     sdl2.SDL_DestroyWindow(window)
