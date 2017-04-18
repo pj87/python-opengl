@@ -108,6 +108,7 @@ def run():
     running = True
     
     GL.glClearColor(0, 0, 0, 1)
+    GL.glEnable(GL.GL_DEPTH_TEST) 
 
     while running: 
        while sdl2.SDL_PollEvent(ctypes.byref(event)) != 0: 
@@ -117,7 +118,7 @@ def run():
              print "SDL_KEYDOWN" 
              if event.key.keysym.sym == sdl2.SDLK_ESCAPE: 
                 running = False
-       GL.glClear(GL.GL_COLOR_BUFFER_BIT)
+       GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
        GL.glDrawElements(GL.GL_TRIANGLES, 6, GL.GL_UNSIGNED_INT, None)
 
        sdl2.SDL_GL_SwapWindow(window)
