@@ -109,6 +109,8 @@ def run():
     
     GL.glClearColor(0, 0, 0, 1)
     GL.glEnable(GL.GL_DEPTH_TEST) 
+    GL.glEnable(GL.GL_CULL_FACE) 
+    GL.glCullFace(GL.GL_BACK) 
 
     while running: 
        while sdl2.SDL_PollEvent(ctypes.byref(event)) != 0: 
