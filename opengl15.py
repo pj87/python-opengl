@@ -63,17 +63,37 @@ def run():
         video.SDL_GL_CONTEXT_PROFILE_CORE)
     context = sdl2.SDL_GL_CreateContext(window)
 
+    i = 0
+    array = [] 
+    array_tris = []
+
+    for v in verts: 
+       array.extend(v) 
+       if i == 0: 
+          array.extend([1.0, 0.0, 0.0]) 
+       elif i == 1: 
+          array.extend([0.0, 1.0, 0.0]) 
+       elif i == 2: 
+          array.extend([0.0, 0.0, 1.0]) 
+       if i < 2: 
+          i += 1 
+       else: 
+          i = 0
+
+    for t in tris: 
+       array_tris.extend(t) 
+
     quad = [-0.5, -0.5, 0.0, 1.0, 0.0, 0.0,
              0.5, -0.5, 0.0, 0.0, 1.0, 0.0,
              0.5,  0.5, 0.0, 0.0, 0.0, 1.0, 
             -0.5,  0.5, 0.0, 1.0, 1.0, 1.0]
 
-    quad = numpy.array(quad, dtype=numpy.float32)
+    quad = numpy.array(array, dtype=numpy.float32)
 
     indices = [0, 1, 2, 
                2, 3, 0]
 
-    indices = numpy.array(indices, dtype=numpy.uint32) 
+    indices = numpy.array(array_tris, dtype=numpy.uint32) 
 
     # Setup GL shaders, data, etc.
     vertex_shader = shaders.compileShader("""
@@ -84,7 +104,7 @@ def run():
    out vec3 newColor; 
    void main() 
    { 
-      gl_Position = vec4(position, 1.0f); 
+      gl_Position = vec4(position.xyz / 10.0 - vec3(1.0), 1.0f); 
       newColor = color; 
    } 
    """
@@ -133,7 +153,7 @@ def run():
     GL.glClearColor(0, 0, 0, 1)
     GL.glEnable(GL.GL_DEPTH_TEST) 
     GL.glEnable(GL.GL_CULL_FACE) 
-    GL.glCullFace(GL.GL_BACK) 
+    GL.glCullFace(GL.GL_FRONT) 
 
     while running: 
        while sdl2.SDL_PollEvent(ctypes.byref(event)) != 0: 
@@ -144,7 +164,7 @@ def run():
              if event.key.keysym.sym == sdl2.SDLK_ESCAPE: 
                 running = False
        GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-       GL.glDrawElements(GL.GL_TRIANGLES, 6, GL.GL_UNSIGNED_INT, None)
+       GL.glDrawElements(GL.GL_TRIANGLES, len(indices), GL.GL_UNSIGNED_INT, None)
 
        sdl2.SDL_GL_SwapWindow(window)
        #sdl2.SDL_Delay(10)
