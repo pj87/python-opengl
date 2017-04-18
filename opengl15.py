@@ -19,6 +19,23 @@ import sdl2
 from sdl2 import video
 from numpy import array
 
+center = numpy.array([8,8,8])
+radius = 4
+
+def test_f(x):
+    global center
+    global radius 
+
+    d = x-center
+    return numpy.dot(d,d) - radius**2
+
+def test_df(x):
+    global center
+    global radius 
+
+    d = x-center
+    return d / numpy.sqrt(np.dot(d,d))
+
 def run():
     if sdl2.SDL_Init(sdl2.SDL_INIT_VIDEO) != 0:
         print(sdl2.SDL_GetError())
