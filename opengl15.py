@@ -18,6 +18,7 @@ from OpenGL.arrays import vbo
 import sdl2
 from sdl2 import video
 from numpy import array
+import dc
 
 center = numpy.array([8,8,8])
 radius = 4
@@ -34,12 +35,14 @@ def test_df(x):
     global radius 
 
     d = x-center
-    return d / numpy.sqrt(np.dot(d,d))
+    return d / numpy.sqrt(numpy.dot(d,d))
 
 def run():
     if sdl2.SDL_Init(sdl2.SDL_INIT_VIDEO) != 0:
         print(sdl2.SDL_GetError())
         return -1
+
+    verts, tris = dc.dual_contour(test_f, test_df, 16)
 
     window = sdl2.SDL_CreateWindow(b"OpenGL demo",
                                    sdl2.SDL_WINDOWPOS_UNDEFINED,
