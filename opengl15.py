@@ -44,6 +44,9 @@ def run():
 
     verts, tris = dc.dual_contour(test_f, test_df, 16)
 
+    print verts
+    print tris
+
     window = sdl2.SDL_CreateWindow(b"OpenGL demo",
                                    sdl2.SDL_WINDOWPOS_UNDEFINED,
                                    sdl2.SDL_WINDOWPOS_UNDEFINED, 800, 600,
@@ -110,11 +113,11 @@ def run():
     # Need VBO for triangle vertices and colours
     VBO = GL.glGenBuffers(1)
     GL.glBindBuffer(GL.GL_ARRAY_BUFFER, VBO)
-    GL.glBufferData(GL.GL_ARRAY_BUFFER, 96, quad, GL.GL_STATIC_DRAW)
+    GL.glBufferData(GL.GL_ARRAY_BUFFER, quad.nbytes, quad, GL.GL_STATIC_DRAW)
 
     EBO = GL.glGenBuffers(1)
     GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, EBO)
-    GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, 24, indices, GL.GL_STATIC_DRAW)
+    GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, indices.nbytes, indices, GL.GL_STATIC_DRAW)
 
     position = GL.glGetAttribLocation(shaderProgram, "position")
     GL.glVertexAttribPointer(position, 3, GL.GL_FLOAT, GL.GL_FALSE, 24, ctypes.c_void_p(0))
