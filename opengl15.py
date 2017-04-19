@@ -20,6 +20,19 @@ from sdl2 import video
 from numpy import array
 import dc
 
+def calculate_normal(tri, vertices): 
+
+    U = vertices[tri[1]] - vertices[tri[0]]
+    V = vertices[tri[2]] - vertices[tri[0]]
+
+    Nx = U[1] * V[2] - U[2] * V[1] 
+    Ny = U[2] * V[0] - U[0] * V[1] 
+    Nz = U[0] * V[1] - U[1] * V[0]
+
+    normal = [Nx, Ny, Nz]
+
+    return normal
+
 center = numpy.array([8,8,8])
 radius = 4
 
@@ -66,6 +79,7 @@ def run():
     i = 0
     array = [] 
     array_tris = []
+    normals = []
 
     for v in verts: 
        array.extend(v) 
@@ -81,6 +95,8 @@ def run():
           i = 0
 
     for t in tris: 
+       normal = calculate_normal(t, verts)
+       normals.append(normal)
        array_tris.extend(t) 
 
     quad = [-0.5, -0.5, 0.0, 1.0, 0.0, 0.0,
