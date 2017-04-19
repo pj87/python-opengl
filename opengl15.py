@@ -21,9 +21,10 @@ from numpy import array
 import dc
 
 class vertex: 
-   vertex = [] 
-   normals = [] 
-   normal = [] 
+   def __init__(self): 
+       self.vertex = [] 
+       self.normal = [] 
+       self.normals = [] 
 
 def calculate_normal(tri, vertices): 
 
@@ -86,7 +87,14 @@ def run():
     array_tris = []
     normals = []
 
+    vertex_struct_array = [] 
+
     for v in verts: 
+       vv = vertex()
+       vv.vertex = v
+       
+       vertex_struct_array.append(vv)
+
        array.extend(v) 
        if i == 0: 
           array.extend([1.0, 0.0, 0.0]) 
