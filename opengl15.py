@@ -20,6 +20,11 @@ from sdl2 import video
 from numpy import array
 import dc
 
+class vertex: 
+   vertex = [] 
+   normals = [] 
+   normal = [] 
+
 def calculate_normal(tri, vertices): 
 
     U = vertices[tri[1]] - vertices[tri[0]]
